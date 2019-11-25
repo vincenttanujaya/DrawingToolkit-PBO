@@ -6,13 +6,14 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DrawingCanvas extends JPanel
 {
-    private LinkedList<DrawingObject> myShapes;
+    private ArrayList<DrawingObject> myShapes;
     private int currentShapeType;
     private DrawingObject currentShapeObject;
     private Color currentShapeColor;
@@ -20,7 +21,7 @@ public class DrawingCanvas extends JPanel
     JLabel statusLabel;
     
     public DrawingCanvas(JLabel statusLabel){
-        myShapes = new LinkedList<DrawingObject>();
+        myShapes = new ArrayList<DrawingObject>();
         currentShapeType=0;
         currentShapeObject=null;
         currentShapeColor=Color.BLACK;
@@ -39,7 +40,7 @@ public class DrawingCanvas extends JPanel
     {
         super.paintComponent( g );
         
-        ArrayList<DrawingObject> shapeArray=myShapes.getArray();
+        ArrayList<DrawingObject> shapeArray=myShapes;
         for ( int counter=shapeArray.size()-1; counter>=0; counter-- )
            shapeArray.get(counter).draw(g);
         
@@ -54,7 +55,7 @@ public class DrawingCanvas extends JPanel
     
     public void clearDrawing()
     {
-        myShapes.makeEmpty();
+        myShapes.clear();
         repaint();
     }
     
@@ -80,8 +81,8 @@ public class DrawingCanvas extends JPanel
             currentShapeObject.setX2(event.getX());
             currentShapeObject.setY2(event.getY());
             
-            myShapes.addFront(currentShapeObject);
-            System.out.println(myShapes.getArray());
+            myShapes.add(currentShapeObject);
+            System.out.println(myShapes.toArray());
                   
             currentShapeObject=null;
             repaint();
